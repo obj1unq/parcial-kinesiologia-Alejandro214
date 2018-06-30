@@ -1,5 +1,9 @@
-//completar el codigo!
-
+//nota 7 siete
+//test: falla 1, algunos detalle 
+//1) B: hay código duplicado y problemas de nombres
+//2) R: mal modelo: los pacientes no conocen su rutina (por eso falla el el último test)
+//3) B+: algo de codigo duplicado 
+//4) B+
 
 class CentroDeKinesiologia{
 	var aparatos = []
@@ -9,6 +13,7 @@ class CentroDeKinesiologia{
 	
 	method pacientesMenoresDeOchoAnios() = pacientes.filter({paciente=> paciente.edad() < 8})
 	
+	//Esto está mal, porque aparatos es el conjunto de aparatos del centro, no la rutina que le correspodne al paciente
 	method pacientesQueNoPuedenCumPlirSesion() = pacientes.count({paciente=> 
 		!paciente.puedeRealizarSesion(aparatos)
 	})
@@ -43,6 +48,9 @@ class Bicicleta  inherits Aparato{
 	
 	override method cantidadDeDolorQueDisminuyeAunPaciente(unPaciente) = 4
 	
+	//TODO: codigo duplicado con nopuedeUsarMinitrampPaciente de minitramp
+	//debería ser un template method en aparato para evitar la duplicacion
+	//TODO: mejorar nombre, esto es una validacion pero parece una pregunta
 	method noPuedeUsarBiciletaPaciente(unPaciente){
 		if(!self.puedeUsarAparatoPaciente(unPaciente)){
 			self.error("el paciente no es mayor de 8 anios")
@@ -96,12 +104,19 @@ class Paciente {
 	
 	method utilizarAparato(aparato){aparato.recibirPaciente(self)}
 	
-    
+    //TODO: la rutina tiene que ser parte del modelo, si no el usuario del objeto
+    //paciente tiene que saber de antemano cual es la rutina que debe realizar
+    //para ese paciente. No quedó esa información en ningún objeto de tu modelo.
+    //es un problema de responsabilidad importante!. Es la causa principal
+    //de que no puedas hacer andar el último test, ya que cada paciente tiene una rutina 
+    //especial, y vos en lugar de probar para cada paciente la rutina correspondiente,
+    //le haces probar todos los aparatos en el orden que el centro los tiene guardado.
 	method realizarSesion(unaSesion){
 		    self.noPuedeRealizarSesion(unaSesion)
 			unaSesion.forEach({aparato=>self.utilizarAparato(aparato) })
 	}
 	
+	//TODO: problemas de nombres
 	method noPuedeRealizarSesion(unaSesion){
 		if(!self.puedeRealizarSesion(unaSesion)){
 			self.error("no puede realizar la sesion")
@@ -132,6 +147,7 @@ class PacienteCaprichoso inherits Paciente {
 	
 	override method realizarSesion(unaSesion) {
 		super(unaSesion)
+		//TODO: repite código! debe llamar a super de nuevo!
 		unaSesion.forEach({aparato=>self.utilizarAparato(aparato) })
 		
 		}
@@ -139,7 +155,9 @@ class PacienteCaprichoso inherits Paciente {
 
 class PacienteDeRapidaRecuperacion inherits Paciente {
 	override  method realizarSesion(unaSesion){
-		super(unaSesion)
+		super(unaSesi
+			on
+		)
 		self.disminuirNivelDeDolor(decremntarNivelDeDolorParaPacienteDeRapidaRecuperacio.valorADecrementar())
 	}
 	

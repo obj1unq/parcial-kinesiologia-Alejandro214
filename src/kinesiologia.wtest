@@ -3,6 +3,7 @@ import kinesiologia.*
 describe "group of tests" {
 
 //**************************objetos para puntos 1 y 2*********************************/
+//TODO: dejar el blanco como valor por defecto en la inicializacion de la variable
 	var magneto = new Magneto(color = "blanco")
     var bicicleta = new Bicicleta(color = "blanco")
     var minitramp = new Minitramp(color = "blanco")
@@ -88,6 +89,8 @@ describe "group of tests" {
 	}
 //***********************Punto 2*************************************
 	test "sesion leo" {
+		//TODO: la sesión que le corresponde al paciente siempre es la misma, por lo tanto
+		//conviene que sea una variable
 		assert.that(leo.puedeRealizarSesion([bicicleta, minitramp, bicicleta ,magneto]))	
 		leo.realizarSesion([bicicleta, minitramp, bicicleta ,magneto])
 	    assert.equals(1.8, leo.nivelDeDolor()) //10 -4 -4 - 0.2 =  1.8		
